@@ -1,6 +1,6 @@
 # ◈ Semantic Audio Search
 
-> Retrieve music samples by meaning — not by name.
+> Retrieve music samples by meaning
 
 An AI-powered retrieval engine built on **CLAP embeddings** and **FAISS**. Describe a sound in plain language, or upload a reference clip — the engine finds what matches, acoustically and semantically.
 
