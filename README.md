@@ -125,23 +125,6 @@ kick.wav
 
 ---
 
-## Setup
-
-```bash
-# Clone
-git clone https://github.com/<your-username>/ai-music-sample-search.git
-cd ai-music-sample-search
-
-# Environment
-python -m venv venv
-source venv/bin/activate
-
-# Dependencies
-pip install -r requirements.txt
-```
-
----
-
 ## Build & Run
 
 ```bash
