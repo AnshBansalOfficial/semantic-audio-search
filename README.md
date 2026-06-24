@@ -56,19 +56,46 @@ kick.wav
 
 ---
 
-## Tech Stack
+<h2 align="center">Tech Stack</h2>
 
-| Layer | Technology |
-|---|---|
-| Language | Python |
-| UI | Streamlit |
-| Audio Processing | Librosa |
-| Deep Learning | PyTorch |
-| Embedding Model | LAION CLAP |
-| Vector Search | FAISS |
-| Transformers | HuggingFace Transformers |
+<div align="center">
 
----
+<table>
+  <tr>
+    <th>Layer</th>
+    <th>Technology</th>
+  </tr>
+  <tr>
+    <td>Language</td>
+    <td>Python</td>
+  </tr>
+  <tr>
+    <td>UI</td>
+    <td>Streamlit</td>
+  </tr>
+  <tr>
+    <td>Audio Processing</td>
+    <td>Librosa</td>
+  </tr>
+  <tr>
+    <td>Deep Learning</td>
+    <td>PyTorch</td>
+  </tr>
+  <tr>
+    <td>Embedding Model</td>
+    <td>LAION CLAP</td>
+  </tr>
+  <tr>
+    <td>Vector Search</td>
+    <td>FAISS</td>
+  </tr>
+  <tr>
+    <td>Transformers</td>
+    <td>HuggingFace Transformers</td>
+  </tr>
+</table>
+
+</div>
 
 ## Project Structure
 
