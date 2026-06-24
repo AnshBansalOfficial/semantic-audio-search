@@ -97,6 +97,8 @@ kick.wav
 
 </div>
 
+---
+
 ## Project Structure
 
 ```
