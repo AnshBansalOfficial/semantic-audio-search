@@ -12,6 +12,8 @@ No filenames. No metadata. Just the audio itself.
 
 ### Text → Audio
 
+<div align="center">
+
 ```
 "short punchy electronic kick"
         ↓
@@ -24,7 +26,11 @@ No filenames. No metadata. Just the audio itself.
 kick-808.wav  ▸  kick-deep.wav  ▸  kick-electro01.wav
 ```
 
+</div>
+
 ### Audio → Audio
+
+<div align="center">
 
 ```
 my_kick.wav  (uploaded)
@@ -38,6 +44,8 @@ my_kick.wav  (uploaded)
 kick-808.wav  ▸  kick-deep.wav  ▸  kick-classic.wav
 ```
 
+</div>
+
 Text and audio embeddings live in the **same 512-dimensional space** — one index handles both query modes.
 
 ---
@@ -45,6 +53,8 @@ Text and audio embeddings live in the **same 512-dimensional space** — one ind
 ## Indexing Pipeline
 
 Each sample is preprocessed before embedding:
+
+<div align="center">
 
 ```
 kick.wav
@@ -59,6 +69,8 @@ kick.wav
   512-D Vector  →  FAISS Index
                 →  metadata.pkl  (filename, instrument, duration, path)
 ```
+
+</div>
 
 ---
 
