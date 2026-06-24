@@ -1,191 +1,83 @@
-# 🎵 AI Music Sample Search
+# ◈ Semantic Audio Search
 
-An AI-powered semantic music sample retrieval engine that enables **text-to-audio** and **audio-to-audio** search using **CLAP embeddings** and **FAISS**.
+> Retrieve music samples by meaning — not by name.
 
-Instead of relying on filenames or metadata, the system retrieves acoustically and semantically similar samples by searching in a shared embedding space.
+An AI-powered retrieval engine built on **CLAP embeddings** and **FAISS**. Describe a sound in plain language, or upload a reference clip — the engine finds what matches, acoustically and semantically.
+
+No filenames. No metadata. Just the audio itself.
 
 ---
 
-## Demo
+## How It Works
 
-### Text Search
+### Text → Audio
 
 ```
-Query:
 "short punchy electronic kick"
-
-↓
-
-Top Results
-
-kick-808.wav
-kick-deep.wav
-kick-electro01.wav
-kick-classic.wav
-...
+        ↓
+   CLAP Text Encoder
+        ↓
+   512-D Embedding
+        ↓
+   FAISS Index Search
+        ↓
+kick-808.wav  ▸  kick-deep.wav  ▸  kick-electro01.wav
 ```
 
-### Audio Search
+### Audio → Audio
 
 ```
-Upload:
+my_kick.wav  (uploaded)
+        ↓
+   CLAP Audio Encoder
+        ↓
+   512-D Embedding
+        ↓
+   FAISS Index Search
+        ↓
+kick-808.wav  ▸  kick-deep.wav  ▸  kick-classic.wav
+```
 
-my_kick.wav
+Text and audio embeddings live in the **same 512-dimensional space** — one index handles both query modes.
 
-↓
+---
 
-Top Results
+## Indexing Pipeline
 
-kick-808.wav
-kick-deep.wav
-kick-classic.wav
-...
+Each sample is preprocessed before embedding:
+
+```
+kick.wav
+  │
+  ├─ Resample → 48 kHz
+  ├─ Mono conversion
+  ├─ Trim silence
+  └─ Peak normalize
+        ↓
+  CLAP Audio Encoder
+        ↓
+  512-D Vector  →  FAISS Index
+                →  metadata.pkl  (filename, instrument, duration, path)
 ```
 
 ---
 
 ## Features
 
-- Semantic text-to-audio search
-- Audio similarity search
-- CLAP multimodal embeddings
-- Fast nearest-neighbor retrieval using FAISS
-- Automatic audio preprocessing
-- Streamlit interface for interactive search
-- Cached embedding model for low-latency inference
-
----
-
-## Project Architecture
-
-```
-                  User
-
-                    │
-
-         ┌──────────┴──────────┐
-         │                     │
-
-    Text Query          Audio Upload
-
-         │                     │
-         └──────────┬──────────┘
-
-                    ▼
-
-            CLAP Embedding Model
-
-                    ▼
-
-             512-D Embedding
-
-                    ▼
-
-                FAISS Index
-
-                    ▼
-
-             Top-K Neighbors
-
-                    ▼
-
-         Metadata Lookup
-
-                    ▼
-
-             Audio Playback
-```
-
----
-
-## How It Works
-
-### 1. Build the Index
-
-Each audio sample is
-
-- Loaded
-- Resampled to 48 kHz
-- Converted to mono
-- Trimmed
-- Peak normalized
-
-The preprocessed waveform is passed through CLAP to generate a **512-dimensional embedding**.
-
-```
-kick.wav
-      │
-      ▼
-Audio Preprocessing
-      │
-      ▼
-CLAP Audio Encoder
-      │
-      ▼
-512-D Vector
-      │
-      ▼
-FAISS Index
-```
-
-Metadata such as filename, instrument, duration, and file path is stored separately.
-
----
-
-### 2. Audio Search
-
-```
-Upload Audio
-
-↓
-
-CLAP Audio Encoder
-
-↓
-
-512-D Query Vector
-
-↓
-
-FAISS Similarity Search
-
-↓
-
-Top Matching Samples
-```
-
----
-
-### 3. Text Search
-
-```
-Text Prompt
-
-↓
-
-CLAP Text Encoder
-
-↓
-
-512-D Query Vector
-
-↓
-
-FAISS Similarity Search
-
-↓
-
-Top Matching Audio Samples
-```
-
-Both text and audio embeddings exist in the same semantic embedding space, enabling multimodal retrieval using a single vector index.
+- Semantic **text-to-audio** search via natural language
+- Semantic **audio-to-audio** similarity search
+- LAION CLAP multimodal embeddings
+- Fast nearest-neighbor retrieval with FAISS
+- Automatic audio preprocessing (resample, trim, normalize)
+- Streamlit UI for interactive exploration
+- Embedding model cached for low-latency inference
 
 ---
 
 ## Tech Stack
 
-| Component | Technology |
-|------------|------------|
+| Layer | Technology |
+|---|---|
 | Language | Python |
 | UI | Streamlit |
 | Audio Processing | Librosa |
@@ -200,73 +92,52 @@ Both text and audio embeddings exist in the same semantic embedding space, enabl
 
 ```
 .
-├── backend
-│   ├── app.py
-│   ├── embed.py
-│   ├── preprocess.py
-│   ├── search.py
-│   ├── build_index.py
-│   └── index
+├── backend/
+│   ├── app.py          ← Streamlit interface
+│   ├── embed.py        ← CLAP embedding logic
+│   ├── preprocess.py   ← Audio normalization pipeline
+│   ├── search.py       ← FAISS query handling
+│   ├── build_index.py  ← Index construction
+│   └── index/
 │       ├── audio.index
 │       └── metadata.pkl
 │
-├── dataset
-│   ├── kick
-│   ├── snare
-│   ├── clap
-│   └── hat
+├── dataset/
+│   ├── kick/
+│   ├── snare/
+│   ├── clap/
+│   └── hat/
 │
 └── README.md
 ```
 
 ---
 
-## Installation
-
-Clone the repository
+## Setup
 
 ```bash
+# Clone
 git clone https://github.com/<your-username>/ai-music-sample-search.git
-
 cd ai-music-sample-search
-```
 
-Create a virtual environment
-
-```bash
+# Environment
 python -m venv venv
-
 source venv/bin/activate
-```
 
-Install dependencies
-
-```bash
+# Dependencies
 pip install -r requirements.txt
 ```
 
 ---
 
-## Build the Vector Index
+## Build & Run
 
 ```bash
+# Build the FAISS index
 python build_index.py
-```
+# → generates index/audio.index and index/metadata.pkl
 
-This generates
-
-```
-audio.index
-metadata.pkl
-```
-
-inside the `index/` directory.
-
----
-
-## Run the Application
-
-```bash
+# Launch the app
 streamlit run app.py
 ```
 
@@ -274,36 +145,32 @@ streamlit run app.py
 
 ## Dataset
 
-The prototype currently indexes approximately **40 drum samples** across four instrument classes:
+The prototype indexes ~40 drum samples across four classes: **kick, snare, clap, hi-hat**.
 
-- Kick
-- Snare
-- Clap
-- Hi-Hat
-
-The retrieval pipeline is independent of dataset size and can be extended to thousands of samples by rebuilding the FAISS index.
+The retrieval pipeline is dataset-agnostic — scaling to thousands of samples requires only rebuilding the FAISS index.
 
 ---
 
-## Future Improvements
+## Planned
 
-- Cloudflare R2 object storage
-- FastAPI backend
-- React / Next.js frontend
-- Metadata filtering (BPM, genre, key)
-- Waveform visualization
-- Approximate indexing (IVF / HNSW)
-- Real-time sample ingestion
-- Larger production-scale dataset
+- [ ] Cloudflare R2 object storage
+- [ ] FastAPI backend
+- [ ] React / Next.js frontend
+- [ ] Metadata filtering — BPM, genre, key
+- [ ] Waveform visualization
+- [ ] Approximate indexing — IVF / HNSW
+- [ ] Real-time sample ingestion
 
 ---
 
-## Key Learnings
+## What This Explores
 
-This project explores practical applications of multimodal representation learning by combining pretrained CLAP embeddings with vector similarity search. It demonstrates how text and audio can be projected into a shared embedding space, enabling semantic retrieval without relying on filenames or manually curated metadata.
+CLAP (Contrastive Language-Audio Pretraining) projects both text and audio into a shared embedding space. This project applies that to sample retrieval: instead of tagging files manually, the system understands acoustic and semantic similarity directly from the signal.
+
+The result is a search experience closer to how producers actually think — *"something dark and metallic"* — rather than how file systems are organized.
 
 ---
 
 ## License
 
-MIT License
+MIT
