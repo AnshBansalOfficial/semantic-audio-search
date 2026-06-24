@@ -146,26 +146,8 @@ The retrieval pipeline is dataset-agnostic — scaling to thousands of samples r
 
 ---
 
-## Planned
-
-- [ ] Cloudflare R2 object storage
-- [ ] FastAPI backend
-- [ ] React / Next.js frontend
-- [ ] Metadata filtering — BPM, genre, key
-- [ ] Waveform visualization
-- [ ] Approximate indexing — IVF / HNSW
-- [ ] Real-time sample ingestion
-
----
-
 ## What This Explores
 
 CLAP (Contrastive Language-Audio Pretraining) projects both text and audio into a shared embedding space. This project applies that to sample retrieval: instead of tagging files manually, the system understands acoustic and semantic similarity directly from the signal.
 
 The result is a search experience closer to how producers actually think — *"something dark and metallic"* — rather than how file systems are organized.
-
----
-
-## License
-
-MIT
