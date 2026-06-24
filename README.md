@@ -12,7 +12,7 @@ No filenames. No metadata. Just the audio itself.
 
 <div align="center">
 
-<img src="search-architecture.png" width="900"/>
+<img src="search-architecture.png" width="1100"/>
 
 </div>
 
