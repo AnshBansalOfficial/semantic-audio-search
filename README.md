@@ -10,39 +10,9 @@ No filenames. No metadata. Just the audio itself.
 
 ## How It Works
 
-### Text → Audio
-
 <div align="center">
 
-```
-"short punchy electronic kick"
-        ↓
-   CLAP Text Encoder
-        ↓
-   512-D Embedding
-        ↓
-   FAISS Index Search
-        ↓
-kick-808.wav  ▸  kick-deep.wav  ▸  kick-electro01.wav
-```
-
-</div>
-
-### Audio → Audio
-
-<div align="center">
-
-```
-my_kick.wav  (uploaded)
-        ↓
-   CLAP Audio Encoder
-        ↓
-   512-D Embedding
-        ↓
-   FAISS Index Search
-        ↓
-kick-808.wav  ▸  kick-deep.wav  ▸  kick-classic.wav
-```
+![Search Architecture](search-architecture.png)
 
 </div>
 
