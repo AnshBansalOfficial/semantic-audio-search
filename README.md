@@ -2,7 +2,7 @@
 
 > Retrieve music samples by meaning
 
-An AI-powered retrieval engine built on **CLAP embeddings** and **FAISS**. Describe a sound in plain language, or upload a reference clip — the engine finds what matches, acoustically and semantically.
+An AI-powered retrieval engine built on **CLAP embeddings** and **FAISS**. Describe a sound in plain language, or upload a reference clip, and the engine finds what matches, acoustically and semantically.
 
 No filenames. No metadata. Just the audio itself.
 
@@ -16,7 +16,7 @@ No filenames. No metadata. Just the audio itself.
 
 </div>
 
-Text and audio embeddings live in the **same 512-dimensional space** — one index handles both query modes.
+Text and audio embeddings live in the **same 512-dimensional space**, and one index handles both query modes.
 
 ---
 
@@ -112,7 +112,7 @@ streamlit run app.py
 
 The prototype indexes ~40 drum samples across four classes: **kick, snare, clap, hi-hat**.
 
-The retrieval pipeline is dataset-agnostic — scaling to thousands of samples requires only rebuilding the FAISS index.
+The retrieval pipeline is dataset-agnostic, and scaling to thousands of samples requires only rebuilding the FAISS index.
 
 ---
 
@@ -120,4 +120,4 @@ The retrieval pipeline is dataset-agnostic — scaling to thousands of samples r
 
 CLAP (Contrastive Language-Audio Pretraining) projects both text and audio into a shared embedding space. This project applies that to sample retrieval: instead of tagging files manually, the system understands acoustic and semantic similarity directly from the signal.
 
-The result is a search experience closer to how producers actually think — *"something dark and metallic"* — rather than how file systems are organized.
+The result is a search experience closer to how producers actually think - *"something dark and metallic"* - rather than how file systems are organized.
